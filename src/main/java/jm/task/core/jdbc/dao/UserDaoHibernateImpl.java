@@ -20,7 +20,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.beginTransaction();
 
             String sql = """
-                    CREATE TABLE IF NOT EXISTS `mydb`.`users` (
+                    CREATE TABLE IF NOT EXISTS users (
                     `id` INT NOT NULL AUTO_INCREMENT,
                     `name` VARCHAR(45) NOT NULL,
                     `lastName` VARCHAR(45) NOT NULL,
@@ -57,9 +57,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public void removeUserById(long id) {
         try (Session session = getFactory().getCurrentSession()) {
             session.beginTransaction();
-
-            User user = session.get(User.class, id);
-            session.delete(user);
+            session.delete(session.get(User.class, id));
             session.getTransaction().commit();
         }
     }
